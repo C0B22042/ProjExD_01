@@ -9,8 +9,8 @@ def main():
     bg_img = pg.image.load("ex01/fig/pg_bg.jpg")
     kotons = list()
     koton = pg.transform.flip(pg.image.load("ex01/fig/3.png"), True, False)
-    kotons.append([koton,0 , 0])
-    kotons.append([pg.transform.rotozoom(koton,10,1), 300, 200])
+    for angle in range(0,10,1):
+        kotons.append(pg.transform.rotozoom(koton,angle,1))
     tmr = 0
     while True:
         for event in pg.event.get():
@@ -18,12 +18,14 @@ def main():
 
         screen.blit(bg_img, [-tmr, 0])
         screen.blit(bg_img, (-tmr+1600, 0))
-        koton = kotons[(tmr//4)%2]
-        screen.blit(koton[0], (300, 200))
+        if ((tmr%(len(kotons)*2))//len(kotons)) == 0: k_tmr = tmr%len(kotons)
+        else: k_tmr = -tmr%len(kotons)-1
+        print((tmr%(len(kotons)*2)))
+        koton = kotons[k_tmr]
+        screen.blit(koton, (300, 200))
         pg.display.update()
         tmr += 1
-        if tmr >= 1600:
-            tmr = 0
+        if tmr >= 1600: tmr = 0
         clock.tick(10)
 
 
